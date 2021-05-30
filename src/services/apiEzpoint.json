@@ -1,0 +1,55 @@
+{
+  "category":[
+    {"id": "1", "title":"Normal"},
+    {"id": "2", "title":"Urgente"},
+    {"id": "3", "title":"Pendente"},
+    {"id": "4", "title":"Sem pressa"},
+    {"id": "5", "title":"Atrasada"}
+  ],
+  "plants": [
+    {
+      "id": 1,
+      "name": "Aningapara",
+      "about": "É uma espécie tropical que tem crescimento rápido e fácil manuseio.",
+      "water_tips": "Mantenha a terra sempre húmida sem encharcar. Regue 2 vezes na semana.",
+      "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/1.svg",
+      "environments": ["living_room", "kitchen"],
+      "frequency": {
+        "times": 2,
+        "repeat_every": "week"
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id":1,
+      "idCategory":"1", 
+      "DateFinal":"05/06/2021", 
+      "hoursFinal":"12:05:00", 
+      "title":"Ajuste no sistema",  
+      "description":"Realizar um ajuste na tela de saida no sistema de estoque."},
+    {
+      "id":2,
+      "idCategory":"2", 
+      "DateFinal":"01/06/2021", 
+      "hoursFinal":"08:00:00", 
+      "title":"Relatórios Urgente", 
+      "description":"Gerar relatórios assistênciais para a diretoria"},
+    {
+      "id":3,
+      "idCategory":"3", 
+      "DateFinal":"29/05/2021", 
+      "hoursFinal":"15:40:00", 
+      "title":"Treinamento de Médicos",  
+      "description":"Agendar um treinamento com a equipe médica."},
+    {
+      "id":4,
+      "idCategory":"4", 
+      "DateFinal":"15/06/2021", 
+      "hoursFinal":"18:19:00", 
+      "title":"Adicionar campo",  
+      "description":"Adicionar um campo de idade no cadastro de usuários"}
+  ]
+  
+
+}
