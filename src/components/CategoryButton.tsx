@@ -39,18 +39,18 @@ export function CategoryButton({
 const styles = StyleSheet.create({
   container:{
     backgroundColor: colors.shape,
-    width: 75,
+    width: 76,
     height: 40,
     justifyContent:'center',
     alignItems: 'center',
     borderRadius: 15,
-    marginRight: 7
+    marginRight: 7,
   },
   containerActive:{
     backgroundColor: colors.green_light 
   },
   text:{
-    color: colors.green,
+    color: colors.heading,
     fontFamily: fonts.text
   },
   textActive: {

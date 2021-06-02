@@ -15,18 +15,27 @@ import fonts from '../styles/fonts';
 export function Header(){
   return(
     <View style={styles.container}>
-      <View style={styles.perfilText}>
-        <Text style={styles.greeting}>Horário de trabalho</Text>
-        <Text style={styles.userName}>08:00 até 17:00</Text>
 
-        <Text style={styles.greeting}>Inicio de hoje</Text>
-        <Text style={styles.userName}>07:57 AM</Text>
-      </View>
-      <Image 
+       <Image 
         source={userImg} 
         style={styles.image}
         resizeMode='contain'
       />
+
+      <View style={styles.perfilText}>
+
+        <View>
+          <Text style={styles.title}>Horário de trabalho</Text>
+          <Text style={styles.workedHours}>08:00h até 17:00h</Text>
+        </View>  
+
+        <View style={styles.infoSecundary}>
+          <Text style={styles.title}>Inicio de hoje</Text>
+          <Text style={styles.workedHours}>07:57 AM</Text>
+        </View>
+
+      </View>
+     
     </View>
   )
 }
@@ -43,21 +52,24 @@ const styles=StyleSheet.create({
   },
   perfilText:{
     flexDirection: 'row',
-    justifyContent:'space-between'
   },
-  greeting:{
-    fontSize: 10,
+  infoSecundary: {
+    marginLeft: 15
+  },
+  title:{
+    fontSize: 15,
     color: colors.heading,
-    fontFamily: fonts.text
-  },
-  userName:{
-    fontSize: 10,
     fontFamily: fonts.heading,
+  },
+  workedHours:{
+    fontSize: 15,
+    fontFamily: fonts.text,
     color: colors.heading,
   },
   image:{
-    width: 80,
-    height: 80,
-    borderRadius: 70
+    width: 70,
+    height: 70,
+    borderRadius: 70,
+    // backgroundColor: 'red'
   }
 })
