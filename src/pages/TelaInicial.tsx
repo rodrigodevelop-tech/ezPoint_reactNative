@@ -1,9 +1,9 @@
 import React from 'react';
-import { 
-    Image, 
-    Text, 
-    TouchableOpacity, 
-    View,StyleSheet, 
+import {
+    Image,
+    Text,
+    TouchableOpacity,
+    View, StyleSheet,
     SafeAreaView,
     Dimensions
 } from 'react-native';
@@ -13,65 +13,89 @@ import homeofficeImg from '../assets/homeoffice.png';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import { useNavigation } from '@react-navigation/core';
+import { LinearGradient } from 'expo-linear-gradient';
 
-export function TelaInicial(){
+export function TelaInicial() {
     const navigation = useNavigation();
 
 
-    function handleStart(){
+    function handleStart() {
         navigation.navigate('UserIdentification');
     }
 
 
-    return(
+    return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.wrapper}>
-                <Text style={styles.title}>
-                Gerencie {'\n'} 
+            <LinearGradient
+                colors={[colors.azul_marinho, colors.cinza]}
+                style={styles.linearGradientBackGround}
+            >
+                <View style={styles.wrapper}>
+
+                    <Text style={styles.title}>
+                        Gerencie {'\n'}
                 seu trabalho {'\n'}
                 de forma fácil
                 </Text>
 
-                <Image 
-                    source={homeofficeImg} 
-                    style={styles.image}
-                    resizeMode='contain'
-                />
+                    <Image
+                        source={homeofficeImg}
+                        style={styles.image}
+                        resizeMode='contain'
+                    />
 
-                <Text style={styles.subTitle}>
-                Registre seu ponto e
-                organize suas atividades.
-                Seu trabalho vai render como nunca.
+                    <Text style={styles.subTitle}>
+                        Registre seu ponto e
+                        organize suas atividades.
+                        Seu trabalho vai render como nunca.
                 </Text>
 
-                <TouchableOpacity 
-                    style={styles.button}
-                    activeOpacity={0.70}
-                    onPress={handleStart}
-                >
-
-                <Entypo 
-                    name="chevron-right"
-                    style={styles.buttonIcon}
-                />   
-    
-                </TouchableOpacity>    
-            </View>
-        </SafeAreaView>
-    )
+                    <TouchableOpacity
+                        style={styles.button}
+                        activeOpacity={0.70}
+                        onPress={handleStart}
+                    >
+                        <LinearGradient
+                            colors={[colors.azul_black, colors.blue, colors.azul_black]}
+                            style={styles.linearGradientButton}>
+                            <Entypo
+                                name="chevron-right"
+                                style={styles.buttonIcon}
+                            />
+                        </LinearGradient>
+                    </TouchableOpacity>
+                </View>
+            </LinearGradient>
+        </SafeAreaView>)
 }
 
 const styles = StyleSheet.create({
-    container :{
+    container: {
         flex: 1,
     },
     wrapper: {
-        flex:1,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+
     },
-    title:{
+    linearGradientBackGround: {
+        flex: 1,
+        paddingLeft: 40,
+        paddingRight: 40,
+        borderRadius: 5
+    },
+
+    linearGradientButton: {
+        flex: 1,
+        paddingTop: 15,
+        paddingLeft: 16,
+        paddingRight: 16,
+        borderRadius: 10
+    },
+
+    title: {
         fontFamily: fonts.heading,
         fontSize: 32,
         fontWeight: 'bold',
@@ -88,12 +112,10 @@ const styles = StyleSheet.create({
         color: colors.azul_black
     },
     button: {
-        backgroundColor: colors.roxo,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 16,
         marginBottom: 10,
-        height:56,
+        height: 56,
         width: 56
     },
     buttonIcon: {
@@ -101,6 +123,6 @@ const styles = StyleSheet.create({
         color: colors.white
     },
     image: {
-        height:Dimensions.get('window').width * 0.7
+        height: Dimensions.get('window').width * 0.7
     }
 })
