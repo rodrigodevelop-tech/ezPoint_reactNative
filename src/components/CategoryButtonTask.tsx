@@ -27,7 +27,7 @@ export function CategoryButtonTask({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.shape,
+    backgroundColor: colors.gray,
     // width: 76,
     paddingHorizontal: 10,
     height: 35,

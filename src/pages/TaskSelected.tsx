@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Button,
   Platform,
-  Alert,
 } from "react-native";
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
@@ -17,22 +16,38 @@ import { TextInput } from "react-native-gesture-handler";
 import { CategoryButtonTask } from "../components/CategoryButtonTask";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from 'moment';
+
+import { useRoute } from '@react-navigation/core';
 import { useNavigation } from "@react-navigation/native";
+import { Alert } from "react-native";
 
+interface Params {
+  task: {
+    id          :string;
+    idCategory  :string;
+    DateFinal   :string;
+    hoursFinal  :string;
+    title       :string;  
+    description :string;
+  }
+}
 
-
-export function CreateTask() {
+export function TaskSelected() {
   const navigation = useNavigation();
-  
+
+  const route = useRoute();
+
+  const {task} = route.params as Params;
+
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState("date");
   const [activeButton, setActiveButton] = useState(0);
   const [date, setDate] = useState(new Date(1598051730000));
   const [hour, setHour] = useState(new Date(1598051730000));
-  const [dateSelected, setDateSelected] = useState("Adicionar Data");
-  const [hourSelected, setHourSelected] = useState("Adicionar horário");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [dateSelected, setDateSelected] = useState("Alterar Data");
+  const [hourSelected, setHourSelected] = useState("Alterar horário");
+  const [title, setTitle] = useState(task.title);
+  const [description, setDescription] = useState(task.description);
 
   const onChangeDate = (event: any, selectedDate: any) => {
     const currentDate = selectedDate || date;
@@ -59,13 +74,13 @@ export function CreateTask() {
   };
   
 
-  function cadastrar() {
+  function alterar() {
     if (activeButton === 0) 
       return Alert.alert("Selecione uma categoria!");
     
     if (title === '') 
       return Alert.alert("Informe um titulo para a tarefa!");
-      
+    
     navigation.navigate("Dashboard");
   }
 
@@ -84,13 +99,14 @@ export function CreateTask() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Criar nova tarefa</Text>
+      <Text style={styles.title}>Sua Tarefa</Text>
       <View style={styles.lineBotton}></View>
       <View>
         <Text style={styles.titleInput}>Título da tarefa </Text>
         <TextInput
           style={styles.input}
           placeholder="Título"
+          value={title}
           onChangeText={(value) => setTitle(value)}
         />
       </View>
@@ -98,6 +114,7 @@ export function CreateTask() {
         <Text style={styles.titleInput}>Descrição</Text>
         <TextInput
           style={styles.input}
+          value={description}
           placeholder="Descrição"
           onChangeText={(value) => setDescription(value)}
         />
@@ -177,7 +194,7 @@ export function CreateTask() {
             </View>
             <View style={styles.containerSubmitButton}>
               <View style={styles.submitButton}>
-                <Button color="#3483F5" title="Cadastrar" onPress={cadastrar} />
+                <Button color="#3483F5" title="Salvar" onPress={alterar} />
               </View>
             </View>
         

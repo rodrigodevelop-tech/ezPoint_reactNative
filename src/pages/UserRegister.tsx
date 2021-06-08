@@ -7,7 +7,8 @@ import {
     TextInput,
     KeyboardAvoidingView,
     Platform,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native';
 
 
@@ -37,6 +38,12 @@ export function UserRegister() {
     const navigation = useNavigation();
 
     function handleRegister() {
+        if(!nameEmail)
+            return Alert.alert('Informe um email!');
+
+        if(!namePwd)
+            return Alert.alert('Informe uma senha!');
+
         navigation.navigate("Confirmation");
     }
 
@@ -87,7 +94,7 @@ export function UserRegister() {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
                 <LinearGradient
-                    colors={[colors.azul_marinho, colors.cinza]}
+                    colors={[colors.gradient_roxo_1, colors.gradient_roxo_2,colors.gradient_roxo_3]}
                     style={styles.linearGradientBackGround}
                 >
 
@@ -107,7 +114,7 @@ export function UserRegister() {
                                 style={[
                                     styles.input,
                                     (isFocusedEmail || isFilledEmail) &&
-                                    { borderColor: colors.green }
+                                    { borderColor: colors.heading }
                                 ]}
                                 placeholder="Digite seu email"
                                 onBlur={() => handleInputBlur("email")}
@@ -126,7 +133,7 @@ export function UserRegister() {
                                     style={[
                                         styles.input,
                                         (isFocusedPwd || isFilledPwd) &&
-                                        { borderColor: colors.green }
+                                        { borderColor: colors.heading }
                                     ]}
                                     placeholder="Digite uma senha"
                                     onBlur={() => handleInputBlur("pwd")}

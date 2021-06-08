@@ -27,7 +27,7 @@ export function TelaInicial() {
     return (
         <SafeAreaView style={styles.container}>
             <LinearGradient
-                colors={[colors.azul_marinho, colors.cinza]}
+                colors={[colors.gradient_roxo_1, colors.gradient_roxo_2,colors.gradient_roxo_3]}
                 style={styles.linearGradientBackGround}
             >
                 <View style={styles.wrapper}>

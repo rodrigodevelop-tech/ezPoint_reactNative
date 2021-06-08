@@ -8,7 +8,8 @@ import {
     View,
     KeyboardAvoidingView,
     Platform,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/core';
@@ -28,6 +29,9 @@ export function Company() {
     const navigation = useNavigation();
 
     function handleCompany() {
+        if(!name)
+            return Alert.alert('Me diz o nome da sua empresa!');
+            
         navigation.navigate("UserRegister");
     }
 
@@ -48,15 +52,14 @@ export function Company() {
 
     return (
         <SafeAreaView style={styles.container}>
+            <LinearGradient
+                colors={[colors.gradient_roxo_1, colors.gradient_roxo_2,colors.gradient_roxo_3]}
+                style={styles.linearGradientBackGround}
+            >
             <KeyboardAvoidingView
                 style={styles.container}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
-                <LinearGradient
-                    colors={[colors.azul_marinho, colors.cinza]}
-                    style={styles.linearGradientBackGround}
-                >
-
                     <View style={styles.content}>
                         <View style={styles.form}>
                             <Text style={styles.emoji}>
@@ -72,7 +75,7 @@ export function Company() {
                                 style={[
                                     styles.input,
                                     (isFocused || isFilled) &&
-                                    { borderColor: colors.green }
+                                    { borderColor: colors.heading }
                                 ]}
                                 placeholder="Nome da Empresa"
                                 onBlur={handleInputBlur}
@@ -99,8 +102,8 @@ export function Company() {
 
                         </View>
                     </View>
-                </LinearGradient>
             </KeyboardAvoidingView>
+                </LinearGradient>
         </SafeAreaView>
     )
 }

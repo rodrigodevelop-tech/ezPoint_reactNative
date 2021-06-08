@@ -8,7 +8,7 @@ import {
 from 'react-native';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
-import { Ionicons } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 
 import api from '../services/api';
 
@@ -16,6 +16,11 @@ import {Header} from '../components/Header';
 import { CategoryButton } from '../components/CategoryButton';
 import { TaskCardPrimary } from '../components/TaskCardPrimary';
 import { Load } from '../components/Load';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { pointSave } from '../libs/storage';
 
 interface CategoryProps {
   id: string;
@@ -32,11 +37,10 @@ interface TasksProps {
 
 const dados1 = [
     {"id": "0", "title":"Todos"},
-    {"id": "1", "title":"Normal"},
-    {"id": "2", "title":"Urgente"},
-    {"id": "3", "title":"Pendente"},
-    {"id": "4", "title":"Sem pressa"},
-    {"id": "5", "title":"Atrasada"}
+    {"id": "1", "title":"Importante/Urgente"},
+    {"id": "2", "title":"Importante/Não Urgente"},
+    {"id": "3", "title":"Não Importante/Urgente"},
+    {"id": "4", "title":"Não Importante/Não Urgente"},
 ]
 
 const dados2 = [
@@ -74,7 +78,7 @@ const dados2 = [
   },
   {
     "id":"5",
-    "idCategory":"5", 
+    "idCategory":"2", 
     "DateFinal":"05/06/2021", 
     "hoursFinal":"18:19:00", 
     "title":"Manutenção o servidor",  
@@ -88,6 +92,23 @@ export function Dashboard(){
   const [filteredTasks,setFilteredTasks] = useState<TasksProps[]>([]);
   const [categorySelected, setCategorySelected] = useState("0");
   const [loading, setLoading] = useState(true);
+  const [start, setStart] = useState("Vamos começar?");
+
+  const navigation = useNavigation();
+
+  async function startPoint(){
+    const startJob = await AsyncStorage.getItem('@startJob:dateStart');
+
+    if(startJob)
+      setStart(startJob);
+    
+  };
+  
+  startPoint();
+
+  function handleDashboard() {
+        navigation.navigate("CreateTask");
+  }
   
   function handleCategorySelected(category: string){
     setCategorySelected(category);
@@ -101,6 +122,9 @@ export function Dashboard(){
     });
 
     setFilteredTasks(filtered);
+  }
+  function handleSelectTask(task:TasksProps){
+    navigation.navigate('Taskselected',{task});
   }
 
   useEffect(()=>{
@@ -144,18 +168,36 @@ export function Dashboard(){
 
     return(
       <View style={styles.container}>
+          
         <View style={styles.header}>
-         <Header/>
+
+            <Header dateStart={start}/>
+
             <Text style={styles.title}>
               Bom dia Rodrigo,
             </Text>
             <Text style={styles.subTitle}>
               Vamos organizar suas tarefas?
             </Text>
-         </View> 
+
+        </View> 
+        <View >
+          
+          <TouchableOpacity
+            style={styles.newTask}
+            activeOpacity={0.70}
+            onPress={handleDashboard}
+          >
+            <AntDesign name="pluscircleo" size={20} color="#32B768" />
+            <Text style={styles.ButtonNewTask}>
+              Nova Tarefa
+            </Text>
+          </TouchableOpacity>
+        </View>
         <View>
           <FlatList
             data={categorys}
+            keyExtractor={(item)=>String(item.id)}
             renderItem={({item})=>(
               <CategoryButton 
                 title={item.title} 
@@ -172,19 +214,26 @@ export function Dashboard(){
         <View style={styles.tasks}>
           <FlatList
               data={filteredTasks}
+              keyExtractor={(item)=>String(item.id)}
               renderItem={({item})=>(
-                <TaskCardPrimary data={item}  />
+                <TaskCardPrimary 
+                  data={item}  
+                  onPress={()=>handleSelectTask(item)}
+                />
               )}
               showsVerticalScrollIndicator={false}
               // numColumns={2}
             />
         </View>
-         
       </View>
+      
     )
 }
 
 const styles = StyleSheet.create({
+  linearGradientBackGround: {
+    flex: 1,
+},
    container:{
       flex:1,
       backgroundColor: colors.background,
@@ -205,6 +254,17 @@ const styles = StyleSheet.create({
       color: colors.heading,
       fontFamily: fonts.text,
    },
+   newTask: {
+     flexDirection: 'row',
+     paddingHorizontal: 31,
+     marginTop: 15,
+     marginBottom: 10,
+   },
+   ButtonNewTask:{
+      fontSize: 15,
+      marginLeft: 5,
+      color: colors.green
+   },
    categoryList:{
      height: 40,
      justifyContent: 'center',
@@ -216,7 +276,7 @@ const styles = StyleSheet.create({
    tasks: {
     flex: 1,
     paddingHorizontal:21,
-    marginTop:5,
+    marginTop:10,
     justifyContent: 'center'
    }
 });

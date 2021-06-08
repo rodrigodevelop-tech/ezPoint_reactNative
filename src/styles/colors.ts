@@ -6,6 +6,7 @@ export default {
   body_dark: '#738078',
   body_light: '#AAB2AD',
 
+  black: 'black',
   background: '#FFFFFF',
   shape: '#F0F0F0',
   white: '#FFFFFF',
@@ -19,7 +20,10 @@ export default {
   rosa_claro: '#F2D3DA',
   cinza: '#C5C5C9',
   azul_marinho: '#6AE5E5',
-  /*azul_marinho: '#CCD4F2',*/
+  gradient_roxo_1 : '#CBD6FF',
+  gradient_roxo_2 : '#C8CEE7',
+  gradient_roxo_3 : '#C5C5C9',
+
   azul_black: '#032B43',
 
   red: '#E83F5B',

@@ -11,30 +11,24 @@ import {
 import userImg from '../assets/capitao.png';
 import fonts from '../styles/fonts';
 
+interface IHeader {
+  dateStart : string
+}
 
-export function Header(){
+export function Header({dateStart }:IHeader){
   return(
     <View style={styles.container}>
+
+        <View>
+          <Text style={styles.title}>Ponto de Hoje</Text>
+          <Text style={styles.workedHours}>{dateStart}</Text>
+        </View>
 
        <Image 
         source={userImg} 
         style={styles.image}
         resizeMode='contain'
       />
-
-      <View style={styles.perfilText}>
-
-        <View>
-          <Text style={styles.title}>Horário de trabalho</Text>
-          <Text style={styles.workedHours}>08:00h até 17:00h</Text>
-        </View>  
-
-        <View style={styles.infoSecundary}>
-          <Text style={styles.title}>Inicio de hoje</Text>
-          <Text style={styles.workedHours}>07:57 AM</Text>
-        </View>
-
-      </View>
      
     </View>
   )
@@ -49,27 +43,27 @@ const styles=StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 20,
     marginTop: getStatusBarHeight(),
+    
   },
   perfilText:{
     flexDirection: 'row',
   },
   infoSecundary: {
-    marginLeft: 15
+    marginLeft: 12
   },
   title:{
-    fontSize: 15,
+    fontSize: 25,
     color: colors.heading,
-    fontFamily: fonts.heading,
+    fontFamily: fonts.text,
   },
   workedHours:{
-    fontSize: 15,
-    fontFamily: fonts.text,
+    fontSize: 25,
+    fontFamily: fonts.heading,
     color: colors.heading,
   },
   image:{
-    width: 70,
-    height: 70,
-    borderRadius: 70,
-    // backgroundColor: 'red'
+    width: 80,
+    height: 80,
+    borderRadius: 80,
   }
 })

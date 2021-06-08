@@ -1,27 +1,49 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
     Text,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Button } from '../components/Button';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+// import { pointSave } from '../libs/storage';
 
 
 
-export function Confirmation() {
+export function PointInfo() {
     const navigation = useNavigation();
+    const [start,setStart]  = useState("");
 
+    const data = new Date();
+    let hora    = data.getHours();          
+    let min     = data.getMinutes();       
+    let seg     = data.getSeconds();     
+    
 
-    function handleConfirmation() {
-        navigation.navigate('UserLogin');
+    async function handleConfirmation() {
+      try{  
+        const str_hora = hora + ':' + min + ':' + seg+ 'h';
+
+        if(!start)
+          setStart(str_hora)
+        else 
+          return Alert.alert('Ponto já foi iniciado!');
+
+        await AsyncStorage.setItem('@startJob:dateStart',start);      
+
+      }catch(err){
+        throw new Error(err);
+      }
+
+        navigation.navigate('Dashboard');
     }
 
     return (
@@ -37,13 +59,13 @@ export function Confirmation() {
                 </Text>
 
                     <Text style={styles.title}>
-                        Finalizado
+                        Mais um dia de trabalho!
                 </Text>
 
                     <Text style={styles.subTitle}>
-                        Agora vamos começar a {'\n'}
-                    organizar suas tarefas.
-                </Text>
+                        Clique para bater {'\n'}
+                        o ponto de hoje!
+                    </Text>
 
                     <View style={styles.footer}>
                         <TouchableOpacity
@@ -56,7 +78,11 @@ export function Confirmation() {
                                 style={styles.gradientButton}>
                                 <Text
                                     style={styles.confirmText}
-                                >Finalizar</Text>
+                                >
+                                  {
+                                  start ? start : 'Começar'
+                                  }
+                                </Text>
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>

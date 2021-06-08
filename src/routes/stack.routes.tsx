@@ -11,6 +11,9 @@ import { UserRegister } from "../pages/UserRegister";
 import { UserLogin } from "../pages/UserLogin";
 import { Dashboard } from "../pages/Dashboard";
 import { CreateTask } from "../pages/CreateTask";
+import { TaskSelected } from "../pages/TaskSelected";
+import { PointInfo } from "../pages/PointInfo";
+import AuthRoutes from "./Tab.routes";
 
 const stackRoutes = createStackNavigator();
 
@@ -23,7 +26,6 @@ const AppRoutes: React.FC = () => (
       },
     }}
   >
-    <stackRoutes.Screen name="CreateTask" component={CreateTask} />
     <stackRoutes.Screen name="Welcome" component={TelaInicial} />
     <stackRoutes.Screen
       name="UserIdentification"
@@ -33,7 +35,10 @@ const AppRoutes: React.FC = () => (
     <stackRoutes.Screen name="UserRegister" component={UserRegister} />
     <stackRoutes.Screen name="Confirmation" component={Confirmation} />
     <stackRoutes.Screen name="UserLogin" component={UserLogin} />
-    <stackRoutes.Screen name="Dashboard" component={Dashboard} />
+    <stackRoutes.Screen name="Dashboard" component={AuthRoutes} />
+    <stackRoutes.Screen name="PointInfo" component={PointInfo} />
+    <stackRoutes.Screen name="CreateTask" component={CreateTask} />
+    <stackRoutes.Screen name="Taskselected" component={TaskSelected} />
   </stackRoutes.Navigator>
 );
 

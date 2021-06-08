@@ -11,7 +11,8 @@ import {
     Keyboard,
     TouchableWithoutFeedback,
     Platform,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native';
 
 import { Button } from '../components/Button';
@@ -20,7 +21,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
-
 export function UserIdentification() {
     const [isFocused, setIsFocused] = useState(false);
     const [isFilled, setIsFilled] = useState(false);
@@ -28,6 +28,9 @@ export function UserIdentification() {
     const navigation = useNavigation();
 
     function handleIndentification() {
+        if(!name)
+            return Alert.alert('Me diz o seu nome!');
+            
         navigation.navigate("CompanyIdentification");
     }
 
@@ -54,7 +57,7 @@ export function UserIdentification() {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
                 <LinearGradient
-                    colors={[colors.azul_marinho, colors.cinza]}
+                    colors={[colors.gradient_roxo_1, colors.gradient_roxo_2,colors.gradient_roxo_3]}
                     style={styles.linearGradientBackGround}
                 >
 
@@ -75,7 +78,7 @@ export function UserIdentification() {
                                     style={[
                                         styles.input,
                                         (isFocused || isFilled) &&
-                                        { borderColor: colors.green }
+                                        { borderColor: colors.heading }
                                     ]}
                                     placeholder="Digite um nome"
                                     onBlur={handleInputBlur}
