@@ -1,7 +1,10 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 
+
 import Routes from './src/routes';
+import {AuthProvider} from './src/contexts/auth';
 
 import { 
   useFonts, 
@@ -20,8 +23,13 @@ export default function App(){
   if(!fonstLoaded)
     return <AppLoading/>  
     
-  return (
-    <Routes/>
+  return (  
+    <NavigationContainer>
+      <AuthProvider>
+        <Routes/>
+      </AuthProvider>
+    </NavigationContainer>
+    
   )
 }
 

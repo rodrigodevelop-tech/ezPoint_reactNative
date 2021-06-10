@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/core";
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
-import { AntDesign } from "@expo/vector-icons";
-import { Button } from "../components/Button";
+import { AntDesign,Entypo  } from "@expo/vector-icons";
 
-// import Logo from "../assets/EZPOINT_semTitulo.png";
+import api from '../services/api';
+
 import Logo from "../assets/EZPOINT_semTitulo-sem_fundo.png";
 
 import { LinearGradient } from 'expo-linear-gradient';
+
+import {useAuth} from '../contexts/auth';
 
 import {
   SafeAreaView,
@@ -20,24 +22,34 @@ import {
   Platform,
   Image,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function UserLogin() {
     const [isFocusedEmail, setIsFocusedEmail] = useState(false);
     const [isFilledEmail, setIsFilledEmail] = useState(false);
     const [isFocusedPwd, setIsFocusedPwd] = useState(false);
     const [isFilledPwd, setIsFilledPwd] = useState(false);
-    const [nameEmail, setNameEmail] = useState<string>();
-    const [namePwd, setNamePwd] = useState<string>();
+    const [nameEmail, setNameEmail] = useState<string>('');
+    const [namePwd, setNamePwd] = useState<string>('');
     const [typeInput, seTypeInput] = useState<string>();
+    const [loggeInUser,setLoggeInUser] = useState({});
 
     const [secure, setSecure] = useState(true);
 
     const navigation = useNavigation();
 
+    const { signed,signIn } = useAuth();
+
+
     function handleUserLogin() {
-        navigation.navigate("Dashboard");
+
+        signIn(nameEmail,namePwd);
+
+        // navigation.navigate("Dashboard")    
     }
 
     function handleInputBlur(typeInput: string) {
@@ -77,6 +89,7 @@ export function UserLogin() {
             setNamePwd(value);
         }
     }
+    
 
     return (
       <SafeAreaView style={styles.container}>
@@ -135,11 +148,19 @@ export function UserLogin() {
                                     onChangeText={handleInputChange}
                                     secureTextEntry={secure}
                                 />
-                                <AntDesign
-                                    name="eye"
-                                    style={styles.iconEye}
-                                    onPress={() => setSecure(!secure)}
-                                />
+                                { secure ?
+                                    <AntDesign
+                                        name="eye"
+                                        style={styles.iconEye}
+                                        onPress={() => setSecure(!secure)}
+                                    />
+                                    :
+                                    <Entypo 
+                                        name="eye-with-line" 
+                                        style={styles.iconEye} 
+                                        onPress={() => setSecure(!secure)}
+                                    />
+                                }
                             </View>
 
                             <View style={styles.button}>
@@ -232,7 +253,7 @@ const styles = StyleSheet.create({
     button: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 15,
+        marginTop: 35,
         marginBottom: 10,
         height: 56,
         width: 200

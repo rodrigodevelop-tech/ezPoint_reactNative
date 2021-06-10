@@ -14,6 +14,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import { useAuth } from '../contexts/auth';
 // import { pointSave } from '../libs/storage';
 
 
@@ -21,29 +22,30 @@ import fonts from '../styles/fonts';
 export function PointInfo() {
     const navigation = useNavigation();
     const [start,setStart]  = useState("");
+    const [startPoint,setStartPoint]  = useState(false);
 
-    const data = new Date();
-    let hora    = data.getHours();          
-    let min     = data.getMinutes();       
-    let seg     = data.getSeconds();     
-    
+    const { pointFinal,pointInfo,pointStart,point } = useAuth();
+
+    useEffect(()=>{
+       
+      if(pointInfo){
+          setStartPoint(true);
+          setStart(pointStart);
+      }
+     
+    },[pointInfo])
 
     async function handleConfirmation() {
-      try{  
-        const str_hora = hora + ':' + min + ':' + seg+ 'h';
 
-        if(!start)
-          setStart(str_hora)
-        else 
-          return Alert.alert('Ponto já foi iniciado!');
+        if(!startPoint){
+            point();
+        }
+        else{
+            pointFinal();
+            setStartPoint(false);
+            setStart('Começar');
+        }
 
-        await AsyncStorage.setItem('@startJob:dateStart',start);      
-
-      }catch(err){
-        throw new Error(err);
-      }
-
-        navigation.navigate('Dashboard');
     }
 
     return (
@@ -63,8 +65,11 @@ export function PointInfo() {
                 </Text>
 
                     <Text style={styles.subTitle}>
-                        Clique para bater {'\n'}
-                        o ponto de hoje!
+                        {!startPoint ? 
+                            'Clique para bater \n o ponto de hoje!'
+                            :
+                            'Clique para finalizar \n o ponto de hoje!'
+                        }
                     </Text>
 
                     <View style={styles.footer}>
@@ -79,9 +84,7 @@ export function PointInfo() {
                                 <Text
                                     style={styles.confirmText}
                                 >
-                                  {
-                                  start ? start : 'Começar'
-                                  }
+                                  {start}
                                 </Text>
                             </LinearGradient>
                         </TouchableOpacity>
