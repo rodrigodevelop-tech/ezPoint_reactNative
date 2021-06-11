@@ -45,6 +45,40 @@ const categorias = [
     {"id": "4", "title":"Não Importante/Não Urgente"},
 ]
 
+const task = [
+  {
+    "id":"1",
+    "idCategory":"1", 
+    "DateFinal":"05/06/2021", 
+    "hoursFinal":"12:05:00", 
+    "title":"Ajuste no sistema",  
+    "description":"Realizar um ajuste na tela de saida no sistema de estoque."
+  },
+  {
+    "id":"2",
+    "idCategory":"2", 
+    "DateFinal":"01/06/2021", 
+    "hoursFinal":"08:00:00", 
+    "title":"Relatórios Urgente", 
+    "description":"Gerar relatórios assistênciais para a diretoria"
+  },
+  {
+    "id":"3",
+    "idCategory":"3", 
+    "DateFinal":"29/05/2021", 
+    "hoursFinal":"15:40:00", 
+    "title":"Treinamento de Médicos",  
+    "description":"Agendar um treinamento com a equipe médica."
+  },
+  {
+    "id":"4",
+    "idCategory":"4", 
+    "DateFinal":"15/06/2021", 
+    "hoursFinal":"18:19:00", 
+    "title":"Adicionar campo",  
+    "description":"Adicionar um campo de idade no cadastro de usuários"
+  }
+]
 
 export function Dashboard(){
   const [categorys, setCategorys] = useState<CategoryProps[]>([]);
@@ -71,9 +105,10 @@ export function Dashboard(){
         navigation.navigate("CreateTask");
   }
   
+
   function handleCategorySelected(category: string){
     setCategorySelected(category);
-
+    
     if(category === "0")
       return setFilteredTasks(tasks);
 
@@ -84,48 +119,23 @@ export function Dashboard(){
 
     setFilteredTasks(filtered);
   }
+
   function handleSelectTask(task:TasksProps){
     navigation.navigate('Taskselected',{task});
   }
-  // setLoading(false);
-  // useEffect(()=>{
-  //     async function fetchCategory(){
-  //       setCategorys(categorias);
-  //       setLoading(false);
-  //     }a
-  //     fetchCategory();
-  // });
 
-  
   useEffect(()=>{
-    
     async function fetchTasks(){
-      const response = await api.get(`task/${categorySelected}`);
-
-      console.log(response.data);
-
-      // setTasks(dados2);
-      // setLoading(false);
+      
+      setTasks(task);
+      setLoading(false);
     }
 
     fetchTasks();
   }),[];
-  
 
-  // useEffect(()=>{
-  //   async function fetchTasks(){
-  //     const { data } = await api.get(`task/${categorys}`,{
-        
-  //     });
-  //     setTasks(data);
-  //     setLoading(false);
-  //   }
-
-  //   fetchTasks();
-  // }),[];
-
-  // if(loading)
-    // return <Load/>
+  if(loading)
+    return <Load/>
 
     return(
       <View style={styles.container}>
@@ -172,10 +182,10 @@ export function Dashboard(){
           />
         </View>
 
-        {/* <View style={styles.tasks}>
+        <View style={styles.tasks}>
           <FlatList
               data={filteredTasks}
-              keyExtractor={(item)=>String(item.id)}
+              keyExtractor={(item)=>String(item.idCategory)}
               renderItem={({item})=>(
                 <TaskCardPrimary 
                   data={item}  
@@ -185,7 +195,7 @@ export function Dashboard(){
               showsVerticalScrollIndicator={false}
               // numColumns={2}
             />
-        </View> */}
+        </View>
       </View>
       
     )

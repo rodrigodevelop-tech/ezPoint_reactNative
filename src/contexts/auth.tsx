@@ -64,7 +64,6 @@ export const AuthProvider: React.FC = ({children}) => {
       
     }catch(err){
       console.log('Erro API: '+err);
-      Alert.alert('Senha ou email incorretos');
     }
       
   }

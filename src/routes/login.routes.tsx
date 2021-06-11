@@ -21,6 +21,11 @@ const LoginRoutes: React.FC = () => (
       },
     }}
   >
+    <stackRoutes.Screen name="Welcome" component={TelaInicial} />
+    <stackRoutes.Screen name="UserIdentification"  component={UserIdentification}/>
+    <stackRoutes.Screen name="CompanyIdentification" component={Company} />
+    <stackRoutes.Screen name="Confirmation" component={Confirmation} />
+    <stackRoutes.Screen name="UserRegister" component={UserRegister} />
     <stackRoutes.Screen name="UserLogin" component={UserLogin} />
   </stackRoutes.Navigator>
 );

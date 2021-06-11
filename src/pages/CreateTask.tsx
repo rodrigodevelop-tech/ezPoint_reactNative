@@ -18,6 +18,8 @@ import { CategoryButtonTask } from "../components/CategoryButtonTask";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from 'moment';
 import { useNavigation } from "@react-navigation/native";
+import api from "../services/api";
+import { useAuth } from "../contexts/auth";
 
 
 
@@ -26,13 +28,18 @@ export function CreateTask() {
   
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState("date");
-  const [activeButton, setActiveButton] = useState(0);
+  const [idCategory, setIdCategory] = useState(0);
   const [date, setDate] = useState(new Date(1598051730000));
   const [hour, setHour] = useState(new Date(1598051730000));
   const [dateSelected, setDateSelected] = useState("Adicionar Data");
   const [hourSelected, setHourSelected] = useState("Adicionar horário");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+
+  const { user } = useAuth();
+
+
 
   const onChangeDate = (event: any, selectedDate: any) => {
     const currentDate = selectedDate || date;
@@ -59,12 +66,29 @@ export function CreateTask() {
   };
   
 
-  function cadastrar() {
-    if (activeButton === 0) 
+  async function cadastrar() {
+    if (idCategory === 0) 
       return Alert.alert("Selecione uma categoria!");
     
     if (title === '') 
       return Alert.alert("Informe um titulo para a tarefa!");
+
+    const response = await api.post('task',{
+      user_id:          user,
+      title:	          title,
+      description:      description,
+      category : 	      category,
+	    id_category : 	  idCategory,
+      status : 		      "aberto",
+      date_hours_final: dateSelected,
+      date_hours_end:   "15/06/2021" 
+    });
+  
+    if(response.status == 200)
+      Alert.alert('Cadastrado com sucesso!');
+    else
+    Alert.alert('Houve uma falha no cadastro!');
+
       
     navigation.navigate("Dashboard");
   }
@@ -107,25 +131,25 @@ export function CreateTask() {
         <View style={styles.categoryContainer}>
           <CategoryButtonTask
             title="Importante/Urgente"
-            active={activeButton == 1}
-            onPress={() => setActiveButton(1)}
+            active={idCategory == 1}
+            onPress={() => setIdCategory(1)}
           />
           <CategoryButtonTask
             title="Importante/Não Urgente"
-            active={activeButton == 2}
-            onPress={() => setActiveButton(2)}
+            active={idCategory == 2}
+            onPress={() => setIdCategory(2)}
           />
         </View>
         <View style={styles.categoryContainer}>
           <CategoryButtonTask
             title="Não Importante/Urgente"
-            active={activeButton == 3}
-            onPress={() => setActiveButton(3)}
+            active={idCategory == 3}
+            onPress={() => setIdCategory(3)}
           />
           <CategoryButtonTask
             title="Não Importante/Não Urgente"
-            active={activeButton == 4}
-            onPress={() => setActiveButton(4)}
+            active={idCategory == 4}
+            onPress={() => setIdCategory(4)}
           />
         </View>
         <View >   

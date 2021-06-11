@@ -26,12 +26,6 @@ const AppRoutes: React.FC = () => (
       },
     }}
   >
-    {/* <stackRoutes.Screen name="Welcome" component={TelaInicial} /> */}
-    {/* <stackRoutes.Screen name="UserIdentification"  component={UserIdentification}/> */}
-    {/* <stackRoutes.Screen name="CompanyIdentification" component={Company} /> */}
-    {/* <stackRoutes.Screen name="UserRegister" component={UserRegister} /> */}
-    {/* <stackRoutes.Screen name="Confirmation" component={Confirmation} /> */}
-    {/* <stackRoutes.Screen name="UserLogin" component={UserLogin} /> */}
     <stackRoutes.Screen name="Dashboard" component={AuthRoutes} />
     <stackRoutes.Screen name="PointInfo" component={PointInfo} />
     <stackRoutes.Screen name="CreateTask" component={CreateTask} />

@@ -39,7 +39,7 @@ export function TaskCardPrimary({
         <View style={styles.card}> 
           <Ionicons name="time-outline" size={20} color="black" />
           <Text style={styles.text}>
-            {data.DateFinal}
+            15/06/2021
           </Text>
         </View>
         

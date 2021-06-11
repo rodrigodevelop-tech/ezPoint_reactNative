@@ -52,6 +52,8 @@ export function UserLogin() {
         // navigation.navigate("Dashboard")    
     }
 
+   
+
     function handleInputBlur(typeInput: string) {
         if (typeInput === "email") {
             setIsFocusedEmail(false);
@@ -162,6 +164,15 @@ export function UserLogin() {
                                     />
                                 }
                             </View>
+                            
+                            {/* <TouchableOpacity
+                                activeOpacity={0.70}
+                                onPress={handleUserCad}
+                            >
+                                <Text style={styles.titleCad}>
+                                    Não tenho um cadastro
+                                </Text>
+                            </TouchableOpacity> */}
 
                             <View style={styles.button}>
                                 <TouchableOpacity
@@ -275,6 +286,13 @@ const styles = StyleSheet.create({
         paddingLeft: 50,
         paddingRight: 50,
         borderRadius: 10
+    },
+    titleCad:{
+        fontSize: 14,
+        color:colors.heading,
+        fontFamily: fonts.text,
+        marginTop: 10,
+        paddingVertical:15
     },
 })
 
